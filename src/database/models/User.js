@@ -3,33 +3,33 @@ module.exports = (sequelize, dataTypes) => {
     let alias = "Users";
     let cols = {
         id: {
-            types: dataTypes.STRING(45),
+            type: dataTypes.STRING(45),
             primaryKey: true,
             allowNull: false
         },
         
         name: {
-            types: dataTypes.STRING(45),
+            type: dataTypes.STRING(45),
             allowNull: false,
         },
         
         email: {
-            types: dataTypes.STRING(45),
+            type: dataTypes.STRING(45),
             allowNull: false,
         },
         
         password: {
-            types: dataTypes.STRING(45),
+            type: dataTypes.STRING(45),
             allowNull: false,
         },
         
         google: {
-            types: dataTypes.BOOLEAN,
+            type: dataTypes.BOOLEAN,
             allowNull: false,
         },
 
         status: {
-            types: dataTypes.BOOLEAN,
+            type: dataTypes.BOOLEAN,
             allowNull: false,
         }
     };
