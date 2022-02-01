@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { join } = require('path');
+const db = require('../database/models/index')
 
 class Server {
 
@@ -9,8 +10,20 @@ class Server {
         this.port = process.env.PORT || 3000;
         this.userAuthPath = '/auth';
 
+        this.dbConnection();
         this.middlewares();
         this.routes();
+    }
+
+    async dbConnection() {
+
+        try {
+            await db.sequelize.authenticate();
+            console.log('Database online');
+            
+        } catch (error) {
+          throw new Error( error );  
+        }
     }
 
     middlewares() {
