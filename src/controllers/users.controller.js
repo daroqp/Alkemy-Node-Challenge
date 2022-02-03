@@ -1,7 +1,6 @@
-const db = require('../database/models/index');
+const User = require('../models/User');
 const uuid = require('uuid');
 const bcrypt = require('bcrypt');
-const { process_params } = require('express/lib/router');
 
 module.exports = {
     
@@ -22,13 +21,13 @@ module.exports = {
     postAuthRegister: async (req, res) => {
        
         const { name, email, password } = req.body;
+        
         const id = uuid.v4();
-
         const saltRounds = bcrypt.genSaltSync();
         const hash = bcrypt.hashSync(password, saltRounds);
         
         try {
-            await db.Users.create({
+            await User.create({
                 id: id,
                 name: name,
                 email: email,

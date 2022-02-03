@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { join } = require('path');
-const db = require('../database/models/index')
+const sequelize = require('../database/database');
 
 class Server {
 
@@ -18,7 +18,7 @@ class Server {
     async dbConnection() {
 
         try {
-            await db.sequelize.authenticate();
+            await sequelize.authenticate();
             console.log('Database online');
             
         } catch (error) {
