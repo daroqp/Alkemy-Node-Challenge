@@ -1,9 +1,10 @@
+
 module.exports = (sequelize, dataTypes) => {
 
     let alias = "Users";
     let cols = {
         id: {
-            type: dataTypes.STRING(45),
+            type: dataTypes.STRING(100),
             primaryKey: true,
             allowNull: false
         },
@@ -40,6 +41,6 @@ module.exports = (sequelize, dataTypes) => {
     }
 
     const User = sequelize.define(alias, cols, config);
-
+    
     return User;
 }

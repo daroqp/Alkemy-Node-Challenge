@@ -1,4 +1,7 @@
 const db = require('../database/models/index');
+const uuid = require('uuid');
+const bcrypt = require('bcrypt');
+const { process_params } = require('express/lib/router');
 
 module.exports = {
     
@@ -19,26 +22,30 @@ module.exports = {
     postAuthRegister: async (req, res) => {
        
         const { name, email, password } = req.body;
-        const id = 'uuuid';
+        const id = uuid.v4();
 
+        const saltRounds = bcrypt.genSaltSync();
+        const hash = bcrypt.hashSync(password, saltRounds);
+        
         try {
             await db.Users.create({
                 id: id,
                 name: name,
                 email: email,
-                password: password,
+                password: hash,
                 google: 0,
                 status: 1,
             });   
+            
+            res.status(201).json({
+                name: name,
+                email: email,
+                msg: "Created successfully"
+            })
         } catch (error) {
             throw new Error( error );  
         }
 
-        res.json({
-            name: name,
-            email: email,
-            msg: "Created successfully"
-        })
     },
 
 }

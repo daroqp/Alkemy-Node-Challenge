@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const router = Router();
+const validateCreate = require('../validators/users');
 
 const { getLogin, 
         getRegister, 
@@ -11,8 +12,8 @@ const { getLogin,
 
 router.get('/login', getLogin );
 router.get('/register', getRegister );
-router.post('/auth', postAuthLogin );
-router.post('/register', postAuthRegister );
+router.post('/login', postAuthLogin );
+router.post('/register', validateCreate, postAuthRegister );
 
 
 module.exports = router;
