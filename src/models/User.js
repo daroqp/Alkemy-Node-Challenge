@@ -33,7 +33,12 @@ User.init({
     status: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-    }
+    },
+    role: {
+        type: DataTypes.STRING(45),
+        allowNull: false,
+        defaultValue: 'user',
+    },
 }, {
     sequelize,
     tableName: "users",

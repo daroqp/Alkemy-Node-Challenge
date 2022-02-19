@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const uuid = require('uuid');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
+const { generateAccessToken } = require('../helpers/auth.helper')
 
 module.exports = {
     
@@ -12,9 +13,35 @@ module.exports = {
         res.render('login/register');
     },
 
-    postAuthLogin: (req, res) => {
+    postAuthLogin: async (req, res) => {
         
         const { email, password } = req.body;
+        
+        try {
+            const userDB = await User.findOne({ where: { email: email } });
+            
+            const passwordCorrect = userDB === null
+                ? false
+                : await bcrypt.compare(password, userDB.password);
+
+            if(!( userDB && passwordCorrect )){
+                res.status(401).json({
+                    error: 'invalid user or password'
+                })
+            }
+            
+            const accessToken = await generateAccessToken( userDB );
+
+            res.header('authorization', accessToken).json({
+                name: userDB.name,
+                token: accessToken,
+                messagge: 'User authenticate',
+            })
+
+        } catch (error) {
+           throw new Error( error );
+        }
+
     },
 
 
