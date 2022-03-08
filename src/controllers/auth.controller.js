@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const { Users }  = require('../database/models/index.js');
 const uuid = require('uuid');
 const bcrypt = require('bcryptjs');
 const { generateAccessToken } = require('../helpers/auth.helper')
@@ -52,14 +52,15 @@ module.exports = {
         const id = uuid.v4();
         const saltRounds = bcrypt.genSaltSync();
         const hash = bcrypt.hashSync(password, saltRounds);
-        
+
+
         try {
-            await User.create({
+
+            await Users.create({
                 id: id,
                 name: name,
                 email: email,
                 password: hash,
-                google: 0,
                 status: 1,
             });   
             

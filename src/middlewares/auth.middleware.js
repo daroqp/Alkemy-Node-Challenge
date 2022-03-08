@@ -2,7 +2,7 @@ const { validateToken } = require('../helpers/auth.helper');
 
 module.exports = {
 
-    checkAuth = async ( req, res, next ) => {
+    checkAuth : async ( req, res, next ) => {
         try {
             const accessToken = req.headers['authorization'];
             if( !accessToken )  res.status(409).json({ msg: "Access denied" });
@@ -22,7 +22,7 @@ module.exports = {
 
     },
 
-    checkRoleAuth = ( roles ) => async (req, res, next) => {
+    checkRoleAuth : ( roles ) => async (req, res, next) => {
         
         try {
             const accessToken = req.headers['authorization'];

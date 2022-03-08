@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { join } = require('path');
-const sequelize = require('../database/database');
+const db = require('../database/models');
 
 class Server {
 
@@ -9,6 +9,7 @@ class Server {
         this.app = express();
         this.port = process.env.PORT || 3000;
         this.userAuthPath = '/auth';
+        this.characterPath = '/characters';
 
         this.dbConnection();
         this.middlewares();
@@ -18,7 +19,7 @@ class Server {
     async dbConnection() {
 
         try {
-            await sequelize.authenticate();
+            await db.sequelize.sync({ force: false });
             console.log('Database online');
             
         } catch (error) {
@@ -37,6 +38,7 @@ class Server {
 
     routes() {
         this.app.use(this.userAuthPath, require('../routes/auth.route'));
+        this.app.use(this.characterPath, require('../routes/character.route'));
     }
 
     listen() {

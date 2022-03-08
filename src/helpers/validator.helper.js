@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const { Users } = require('../database/models/index.js');
 const { validationResult } = require('express-validator');
 
 const validateResult = (req, res, next) => {
@@ -12,7 +12,7 @@ const validateResult = (req, res, next) => {
 }
 
 const hasEmail = async ( email ) => {
-    const userEmail = await User.findOne({ where: { email: email } })
+    const userEmail = await Users.findOne({ where: { email: email } })
     if( userEmail ){
         throw new Error( 'Email existente' )
     }
