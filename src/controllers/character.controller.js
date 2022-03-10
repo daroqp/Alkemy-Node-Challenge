@@ -32,16 +32,16 @@ const postCharacter = async (req, res) => {
             history: history,
         });
 
-        await Promise.all(
-            movies_ids.map( async movie_id => {
-                await Character_Movie.create({
+        await Character_Movie.bulkCreate(
+            movies_ids.map( movie_id => {
+                return {
                     id: uuid.v4(),
                     characters_id: id,
                     movies_series_id: movie_id
-                });
+                }
             })
-        );        
-        
+        )
+
         res.status(201).json({
             msg: "Character created successfully"
         })
@@ -69,7 +69,7 @@ const characterDetail = async ( req, res ) => {
 
         if( !character ) res.status(404).json({ msg: "Character not found" });
 
-        res.json({
+        res.status(200).json({
             character
         })
 
@@ -79,6 +79,8 @@ const characterDetail = async ( req, res ) => {
 };
 
 const editCharacter = async ( req, res ) => {
+
+    const {  } = req.body;
 
 };
 
