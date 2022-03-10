@@ -45,9 +45,9 @@ module.exports = ( sequelize, DataTypes ) => {
 
     Movies_series.associate = models => {
         Movies_series.belongsTo( models.Genres );
-        Movies_series.hasMany( models.Character_Movie, {
+        Movies_series.belongsToMany( models.Characters, {
             foreignKey: "movies_series_id",
-            as: "characters"
+            through: "Character_Movie",
         } )
     }
 

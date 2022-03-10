@@ -41,10 +41,12 @@ module.exports = (sequelize, DataTypes) => {
 
     Character_Movies_Pivot.associate = models => {
         Character_Movies_Pivot.belongsTo( models.Characters, {
-            foreignKey: "movies_series_id"
+            otherKey: "characters_id",
+            foreignKey: "movies_series_id",
         } );
         Character_Movies_Pivot.belongsTo( models.Movies_series, {
-            foreignKey: "characters_id"
+            otherKey: "movies_series_id",
+            foreignKey: "characters_id",
         } )
     }
 
