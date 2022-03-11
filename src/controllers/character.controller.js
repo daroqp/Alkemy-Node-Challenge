@@ -80,8 +80,39 @@ const characterDetail = async ( req, res ) => {
 
 const editCharacter = async ( req, res ) => {
 
-    const {  } = req.body;
+    const { name, image, weight, age, history, movies_ids } = req.body;
 
+    try {
+
+        await Characters.update({
+            name: name,
+            image: image,
+            weight: weight,
+            age: age,
+            history: history
+        },{
+            where: { id: req.params.character_id }
+        });
+
+        await Character_Movie.destroy({ where: { characters_id: req.params.character_id } })
+    
+        await Character_Movie.bulkCreate(
+            movies_ids.map( movie_id => {
+                return {
+                    id: uuid.v4(),
+                    characters_id: req.params.character_id,
+                    movies_series_id: movie_id
+                }
+            })
+        )
+
+        res.status(200).json({
+            msg: "Character updated successfully!"
+        })
+
+    } catch (error) {
+        throw new Error ( error );
+    }
 };
 
 const deleteCharacter = async ( req, res ) => {
