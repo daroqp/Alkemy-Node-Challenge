@@ -117,6 +117,25 @@ const editCharacter = async ( req, res ) => {
 
 const deleteCharacter = async ( req, res ) => {
 
+    try {
+        
+        const isDeleted = await Characters.destroy({ where: { id: req.params.character_id } });
+
+        if( isDeleted ){
+            res.status(200).json({
+                msg: "Character has been deleted successfully!"
+            })
+        } else {
+            res.status(400).json({
+                msg: "Character doesn't  exist or worng id"
+            })
+        }
+
+
+    } catch (error) {
+       throw new Error ( error ) ;
+    }
+
 };
 
 module.exports = {
