@@ -10,6 +10,7 @@ class Server {
         this.port = process.env.PORT || 3000;
         this.userAuthPath = '/auth';
         this.characterPath = '/characters';
+        this.moviesPath = '/movies';
 
         this.dbConnection();
         this.middlewares();
@@ -39,6 +40,7 @@ class Server {
     routes() {
         this.app.use(this.userAuthPath, require('../routes/auth.route'));
         this.app.use(this.characterPath, require('../routes/character.route'));
+        this.app.use(this.moviesPath, require('../routes/movie.route'));
     }
 
     listen() {
