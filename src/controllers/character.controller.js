@@ -2,18 +2,33 @@ const uuid = require('uuid');
 const { Characters } = require('../database/models/index.js')
 const { Character_Movie } = require('../database/models/index.js')
 const { Movies_series } = require('../database/models/index.js')
+const { Op } = require('sequelize');
 
 const getCharacters = async (req, res) => {
 
     try {
-        const characters = await Characters.findAll({ attributes: [ 'name', 'image' ] });
+
+        const { name, age, weight, movies } = req.query;
+        const where = new Object();
+        const whereMovie = new Object();
+
+        if( name ) where.name = { [Op.like]: `%${name}%` };
+        if( age ) where.age = { [Op.eq]: age };
+        if( weight ) where.weight = { [Op.eq]: weight };
+        if( movies ) whereMovie.id = movies;
+        
+        const characters = await Characters.findAll({ 
+            attributes: [ 'name', 'image' ], 
+            include: [{ model: Movies_series, as: 'movies_or_series', attributes:[], where: whereMovie }],
+            where 
+        });
 
         res.status(200).json({
             characters
         });
 
     } catch (error) {
-        throw new Error( error );
+        console.log( error );
     }
 }
 
@@ -106,7 +121,7 @@ const editCharacter = async ( req, res ) => {
             })
         )
 
-        res.status(200).json({
+        res.status(204).json({
             msg: "Character updated successfully!"
         })
 

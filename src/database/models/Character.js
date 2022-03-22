@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         weight: {
-            type: DataTypes.STRING(45),
+            type: DataTypes.INTEGER(10),
             allowNull: false,
         },
 
