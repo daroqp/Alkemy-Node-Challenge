@@ -62,7 +62,7 @@ const postCharacter = async (req, res) => {
         })
 
     } catch (error) {
-       throw new Error( error ); 
+        console.log( error );
     }
 
 };

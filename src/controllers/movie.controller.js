@@ -1,6 +1,10 @@
+const uuid = require('uuid');
+
 const { Movies_series } = require('../database/models/');
 const { Genres } = require('../database/models/');
 const { Characters } = require('../database/models/');
+const { Character_Movie } = require('../database/models/');
+
 
 const getMovies = async (req, res) => {
     try {
@@ -42,8 +46,43 @@ const movieDetail = async (req, res) => {
     }
 }
 
+const postMovie = async (req, res) => {
+
+    const { title, image, rate, genre_id, characters } = req.body;
+    const id = uuid.v4();
+
+    try {
+
+        await Movies_series.create({
+            id: id,
+            title: title,
+            image: image,
+            rate: rate,
+            genres_id: genre_id,
+        });
+
+        await Character_Movie.bulkCreate(
+            characters.map( character => {
+                return {
+                    id: uuid.v4(),
+                    characters_id: character,
+                    movies_series_id: id
+                }
+            })
+        );
+
+        res.status(200).json({
+            msg: "Movie/serie created successfully!"
+        })
+
+    } catch (error) {
+        console.log( error );
+    }
+}
+
 
 module.exports = {
     getMovies,
-    movieDetail
+    movieDetail,
+    postMovie
 }

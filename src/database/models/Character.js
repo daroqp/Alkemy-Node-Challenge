@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         history: {
-            type: DataTypes.STRING(100),
+            type: DataTypes.STRING(900),
             allowNull: false,
         },
 
