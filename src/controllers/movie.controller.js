@@ -114,12 +114,33 @@ const editMovie = async (req, res) => {
     } catch (error) {
        console.log( error ) ;
     }
+}
 
+const deleteMovie = async ( req, res ) => {
+
+    try {
+        
+        const isDeleted = Movies_series.destroy({ where: { id: req.params.movie_id } });
+
+        if( isDeleted ){
+            res.status(200).json({
+                msg: "Movie/serie has been deleted successfully!"
+            })
+        } else {
+            res.status(400).json({
+                msg: "Movie/serie doesn't  exist or worng id"
+            })
+        }
+
+    } catch (error) {
+       console.log( error );
+    }
 }
 
 module.exports = {
     getMovies,
     movieDetail,
     postMovie,
-    editMovie
+    editMovie,
+    deleteMovie
 }
