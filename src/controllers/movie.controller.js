@@ -80,9 +80,46 @@ const postMovie = async (req, res) => {
     }
 }
 
+const editMovie = async (req, res) => {
+
+    const { title, image, rate, genre_id, characters } = req.body;
+
+    try {
+
+        await Movies_series.update({
+            title: title,
+            image: image,
+            rate: rate,
+            genres_id: genre_id,
+        },{
+            where: { id: req.params.movie_id }
+        });
+        
+        await Character_Movie.destroy({ where: { movies_series_id: req.params.movie_id } })
+
+        await Character_Movie.bulkCreate(
+            characters.map( character => {
+                return {
+                    id: uuid.v4(),
+                    characters_id: character,
+                    movies_series_id: req.params.movie_id
+                }
+            })
+        );
+
+        res.status(204).json({
+            msg: "Movie/serie updated successfully!"
+        })
+
+    } catch (error) {
+       console.log( error ) ;
+    }
+
+}
 
 module.exports = {
     getMovies,
     movieDetail,
-    postMovie
+    postMovie,
+    editMovie
 }
