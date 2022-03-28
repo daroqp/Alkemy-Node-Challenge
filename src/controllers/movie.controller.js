@@ -7,9 +7,22 @@ const { Character_Movie } = require('../database/models/');
 
 
 const getMovies = async (req, res) => {
+
     try {
 
-        const movies = await Movies_series.findAll({ attributes: ['title', 'image', 'createdAt'] });
+        let { title, genre_id, order } = req.query;
+        const where = new Object();
+
+        if( title ) where.title = { [Op.like]: `%${title}%` };
+        if( genre_id ) where.genres_id = { [Op.like]: genre_id };
+        if( !order ) order = 'ASC';
+
+        const movies = await Movies_series.findAll({ 
+            attributes: ['title', 'image', 'createdAt'],
+            order: [ ['createdAt', order] ],
+            where 
+        });
+        
         res.status(200).json({
             movies
         })
