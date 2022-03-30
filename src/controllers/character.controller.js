@@ -1,8 +1,9 @@
 const uuid = require('uuid');
+const { Op } = require('sequelize');
+
 const { Characters } = require('../database/models/index.js')
 const { Character_Movie } = require('../database/models/index.js')
 const { Movies_series } = require('../database/models/index.js')
-const { Op } = require('sequelize');
 
 const getCharacters = async (req, res) => {
 
@@ -29,6 +30,9 @@ const getCharacters = async (req, res) => {
 
     } catch (error) {
         console.log( error );
+        res.status(500).json({
+            error: error
+        });
     }
 }
 
@@ -63,6 +67,9 @@ const postCharacter = async (req, res) => {
 
     } catch (error) {
         console.log( error );
+        res.status(500).json({
+            error: error
+        });
     }
 
 };
@@ -90,12 +97,15 @@ const characterDetail = async ( req, res ) => {
 
     } catch (error) {
         console.log( error );
+        res.status(500).json({
+            error: error
+        });
     }
 };
 
 const editCharacter = async ( req, res ) => {
 
-    const { name, image, weight, age, history, movies_ids } = req.body;
+    const { name, image, weight, age, history, movies_ids = [] } = req.body;
 
     try {
 
@@ -121,12 +131,15 @@ const editCharacter = async ( req, res ) => {
             })
         )
 
-        res.status(204).json({
+        res.status(200).json({
             msg: "Character updated successfully!"
         })
 
     } catch (error) {
         console.log( error );
+        res.status(500).json({
+            error: error
+        });
     }
 };
 
@@ -149,6 +162,9 @@ const deleteCharacter = async ( req, res ) => {
 
     } catch (error) {
         console.log( error );
+        res.status(500).json({
+            error: error
+        });
     }
 
 };
