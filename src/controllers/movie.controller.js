@@ -1,4 +1,5 @@
 const uuid = require('uuid');
+const { Op } = require('sequelize');
 
 const { Movies_series } = require('../database/models/');
 const { Genres } = require('../database/models/');
@@ -10,12 +11,11 @@ const getMovies = async (req, res) => {
 
     try {
 
-        let { title, genre_id, order } = req.query;
+        const { title, genre_id, order = 'ASC' } = req.query;
         const where = new Object();
 
         if( title ) where.title = { [Op.like]: `%${title}%` };
         if( genre_id ) where.genres_id = { [Op.like]: genre_id };
-        if( !order ) order = 'ASC';
 
         const movies = await Movies_series.findAll({ 
             attributes: ['title', 'image', 'createdAt'],
@@ -35,6 +35,7 @@ const getMovies = async (req, res) => {
 const movieDetail = async (req, res) => {
 
     try {
+
         const movie_id = req.params.movie_id;
         const movie = await Movies_series.findByPk(movie_id, { 
             attributes: ['title', 'image', 'rate'],

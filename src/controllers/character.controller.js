@@ -89,7 +89,7 @@ const characterDetail = async ( req, res ) => {
         })
 
     } catch (error) {
-       throw new Error ( error );
+        console.log( error );
     }
 };
 
@@ -126,7 +126,7 @@ const editCharacter = async ( req, res ) => {
         })
 
     } catch (error) {
-        throw new Error ( error );
+        console.log( error );
     }
 };
 
@@ -148,7 +148,7 @@ const deleteCharacter = async ( req, res ) => {
 
 
     } catch (error) {
-       throw new Error ( error ) ;
+        console.log( error );
     }
 
 };
