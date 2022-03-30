@@ -29,6 +29,9 @@ const getMovies = async (req, res) => {
 
     } catch (error) {
         console.log( error );
+        res.status(500).json({
+            error: error
+        });
     }
 }
 
@@ -56,7 +59,10 @@ const movieDetail = async (req, res) => {
         });
 
     } catch (error) {
-       console.log( error ) ;
+        console.log( error ) ;
+        res.status(500).json({
+            error: error
+        });
     }
 }
 
@@ -91,12 +97,15 @@ const postMovie = async (req, res) => {
 
     } catch (error) {
         console.log( error );
+        res.status(500).json({
+            error: error
+        });
     }
 }
 
 const editMovie = async (req, res) => {
 
-    const { title, image, rate, genre_id, characters } = req.body;
+    const { title, image, rate, genre_id, characters = [] } = req.body;
 
     try {
 
@@ -121,12 +130,15 @@ const editMovie = async (req, res) => {
             })
         );
 
-        res.status(204).json({
+        res.status(200).json({
             msg: "Movie/serie updated successfully!"
         })
 
     } catch (error) {
-       console.log( error ) ;
+        console.log( error ) ;
+        res.status(500).json({
+            error: error
+        });
     }
 }
 
@@ -147,7 +159,10 @@ const deleteMovie = async ( req, res ) => {
         }
 
     } catch (error) {
-       console.log( error );
+        console.log( error );
+        res.status(500).json({
+            error: error
+        });
     }
 }
 
