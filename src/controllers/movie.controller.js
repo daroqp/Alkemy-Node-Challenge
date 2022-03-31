@@ -68,7 +68,8 @@ const movieDetail = async (req, res) => {
 
 const postMovie = async (req, res) => {
 
-    const { title, image, rate, genre_id, characters } = req.body;
+    const { title, rate, genre_id, characters = [] } = req.body;
+    const image = req.file.filename;
     const id = uuid.v4();
 
     try {

@@ -38,7 +38,8 @@ const getCharacters = async (req, res) => {
 
 const postCharacter = async (req, res) => {
 
-    const { name, image, weight, age, history, movies_ids } = req.body;
+    const { name, weight, age, history, movies_ids = [] } = req.body;
+    const image = req.file.filename;
     const id = uuid.v4();
     
     try {
