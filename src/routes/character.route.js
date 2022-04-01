@@ -1,16 +1,18 @@
 const { Router } = require('express');
 const { getCharacters, postCharacter, deleteCharacter, editCharacter, characterDetail } = require('../controllers/character.controller');
+const { validateCharacter,validateIdCharacter, validateFilterCharacter } = require('../middlewares/validators/characters.validator');
 const uploadFile = require('../middlewares/fileUpload.middleware');
 const router = Router();
 
 
-router.get('/', getCharacters );
-router.get('/:character_id', characterDetail );
+router.get('/', validateFilterCharacter , getCharacters );
 
-router.post('/create', uploadFile.single('image'), postCharacter );
+router.get('/:character_id', validateIdCharacter , characterDetail );
 
-router.put('/:character_id', editCharacter );
+router.post('/create', uploadFile.single('image') , validateCharacter , postCharacter );
 
-router.delete('/:character_id', deleteCharacter );
+router.put('/:character_id', validateCharacter , editCharacter );
+
+router.delete('/:character_id', validateIdCharacter , deleteCharacter );
 
 module.exports = router;
