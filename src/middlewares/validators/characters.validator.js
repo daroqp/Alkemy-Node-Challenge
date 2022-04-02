@@ -30,7 +30,8 @@ const validateCharacter = [
     check('movies_ids')
         .exists()
         .custom(arr => arr instanceof Array && !arr.some(x => !isUUID(x, '4')))
-        .withMessage("Ids must only contain UUIDs."),
+        .withMessage("Ids must only contain UUIDs.")
+        .optional(),
     (req, res, next) => {
         validateResult(req, res, next);
     }

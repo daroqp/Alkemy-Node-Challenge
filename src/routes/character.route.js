@@ -9,7 +9,7 @@ router.get('/', validateFilterCharacter , getCharacters );
 
 router.get('/:character_id', validateIdCharacter , characterDetail );
 
-router.post('/create', uploadFile.single('image') , validateCharacter , postCharacter );
+router.post('/create', uploadFile, validateCharacter , postCharacter );
 
 router.put('/:character_id', validateCharacter , editCharacter );
 

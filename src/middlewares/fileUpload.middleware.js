@@ -12,7 +12,20 @@ const storage = multer.diskStorage({
         cb(null, filename);
     },
 });
+const fileFilter = (req, file, cb) => {
+    const ext = file.originalname.split(".").pop();
+    const validExtention = /(jpg|jpeg|png)/;
+    const isValidExtension = ext.match( validExtention );
 
-const uploadFile = multer({ storage });
+    if( isValidExtension ) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+        return cb(new Error('File extension not valid.'));
+    }
+}
+
+
+const uploadFile = multer({ storage, fileFilter }).single('image');
 
 module.exports = uploadFile;

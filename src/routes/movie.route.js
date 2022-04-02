@@ -6,7 +6,7 @@ const router = Router();
 router.get('/', getMovies );
 router.get('/:movie_id', movieDetail );
 
-router.post('/create',uploadFile.single('image'), postMovie );
+router.post('/create',uploadFile , postMovie );
 
 router.put('/:movie_id', editMovie );
 
