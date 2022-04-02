@@ -4,14 +4,14 @@ const { hasEmail, validateResult } = require('../../helpers/validator.helper');
 const validateUser = [
     check('name')
         .notEmpty()
-        .withMessage('Debes llenar el campo name'),
+        .withMessage('Must be filled the name field.'),
     check('password')
         .notEmpty()
-        .withMessage('Debes llenar el campo password'),
+        .withMessage('Must be filled the password field.'),
     check('email')
         .exists()    
         .isEmail()
-        .withMessage('Debes llenar el campo email')
+        .withMessage('Must be filled the email field.')
         .custom( hasEmail ),
     (req, res, next) => {
         validateResult(req, res, next);
