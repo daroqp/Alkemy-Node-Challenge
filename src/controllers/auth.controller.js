@@ -3,76 +3,77 @@ const uuid = require('uuid');
 const bcrypt = require('bcryptjs');
 const { generateAccessToken } = require('../helpers/auth.helper')
 
-module.exports = {
+postAuthLogin = async (req, res) => {
     
-    getLogin: (req, res) => {
-        res.render('login/index');
-    },
+    const { email, password } = req.body;
+    
+    try {
 
-    getRegister: (req, res) => {
-        res.render('login/register');
-    },
+        const user = await Users.findOne({ where: { email: email } });
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
-    postAuthLogin: async (req, res) => {
-        
-        const { email, password } = req.body;
-        
-        try {
-            const userDB = await User.findOne({ where: { email: email } });
-            
-            const passwordCorrect = userDB === null
-                ? false
-                : await bcrypt.compare(password, userDB.password);
-
-            if(!( userDB && passwordCorrect )){
-                res.status(401).json({
-                    error: 'invalid user or password'
-                })
-            }
-            
-            const accessToken = await generateAccessToken( userDB );
-
-            res.header('authorization', accessToken).json({
-                name: userDB.name,
-                token: accessToken,
-                messagge: 'User authenticate',
+        if(!( user && isPasswordCorrect )){
+            res.status(401).json({
+                error: 'invalid user or password'
             })
-
-        } catch (error) {
-           throw new Error( error );
         }
-
-    },
-
-
-    postAuthRegister: async (req, res) => {
-       
-        const { name, email, password } = req.body;
         
-        const id = uuid.v4();
-        const saltRounds = bcrypt.genSaltSync();
-        const hash = bcrypt.hashSync(password, saltRounds);
+        const accessToken = await generateAccessToken( user );
+
+        res.header('authorization', accessToken).json({
+            name: user.name,
+            token: accessToken,
+            role: user.role,
+            messagge: 'User authenticate',
+        })
+
+    } catch (error) {
+        console.log( error );
+        res.status(500).json({
+            error: error
+        });
+    }
+
+},
 
 
-        try {
+postAuthRegister = async (req, res) => {
+   
+    const { name, email, password } = req.body;
+    
+    const id = uuid.v4();
+    const saltRounds = bcrypt.genSaltSync();
+    const hash = bcrypt.hashSync(password, saltRounds);
 
-            await Users.create({
-                id: id,
-                name: name,
-                email: email,
-                password: hash,
-                status: 1,
-            });   
-            
-            res.status(201).json({
-                name: name,
-                email: email,
-                msg: "Created successfully"
-            })
-        } catch (error) {
-            throw new Error( error );  
-        }
 
-    },
+    try {
 
+        const userCreated = await Users.create({
+            id: id,
+            name: name,
+            email: email,
+            password: hash,
+            status: 1,
+        });   
+        
+        const token = await generateAccessToken( userCreated );
+
+        res.status(201).json({
+            name: userCreated.name,
+            email: userCreated.email,
+            token: token,
+            msg: "Created successfully"
+        })
+    } catch (error) {
+        console.log( error );
+        res.status(500).json({
+            error: error
+        });
+    }
+
+}
+
+module.exports = {
+    postAuthLogin,
+    postAuthRegister,
 }

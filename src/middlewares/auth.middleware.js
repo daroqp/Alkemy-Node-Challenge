@@ -1,44 +1,53 @@
+const { Users } = require('../database/models/index.js')
 const { validateToken } = require('../helpers/auth.helper');
 
-module.exports = {
+checkAuth = async ( req, res, next ) => {
+    try {
+        const accessToken = req.headers.authorization;
+        if( !accessToken ) return res.status(401).json({ msg: "Access denied" });
 
-    checkAuth : async ( req, res, next ) => {
-        try {
-            const accessToken = req.headers['authorization'];
-            if( !accessToken )  res.status(409).json({ msg: "Access denied" });
-            
-            const tokenData = await validateToken( accessToken );
-            if( tokenData.id ) {
-                next();
-            } else {
-                res.status(409).json({ msg: "Access denied, token expired or incorrect" });
-            }
-        } catch (error) {
-            console.log( error );
-            res.status(409).json({
-                msg: 'Access denied'
-            })
-        }
+        const token = accessToken.split(' ').pop();
+        const tokenData = await validateToken( token );
 
-    },
+        if( !tokenData.id ){
+           res.status(401).json({ msg: "Access denied, token expired or incorrect" }) 
+           return
+        } 
 
-    checkRoleAuth : ( roles ) => async (req, res, next) => {
-        
-        try {
-            const accessToken = req.headers['authorization'];
-            const tokenData = await validateToken( accessToken );
-            const roleUser =  tokenData.role;
-    
-            if( [...roles ].includes(roleUser) ){
-                next();
-            } else {
-                res.status(409).json({ msg: "You don't have permissions" });
-            }  
-        } catch (error) {
-            console.log( error )
-            res.status(409).json({
-                msg: "You don't have permissions"
-            });
-        }
+        //Para uso interno de trazabilidad
+        const user = await Users.findByPk( tokenData.id );
+        req.user = user;
+
+        next()
+    } catch (error) {
+        console.log( error );
+        res.status(409).json({
+            msg: 'Access denied'
+        })
     }
+
+}
+
+checkRoleAuth = ( roles ) => async (req, res, next) => {
+    
+    try {
+        const { user } = req;
+        const roleUser = user.role;
+
+        const checkValueRol = roles.some( rol => rol == roleUser );
+        
+        if( !checkValueRol ) return res.status(403).json({ msg: "You don't have permissions" });
+
+        next();
+    } catch (error) {
+        console.log( error )
+        res.status(403).json({
+            msg: "You don't have permissions"
+        });
+    }
+}
+
+module.exports = {
+    checkAuth,
+    checkRoleAuth,
 }
