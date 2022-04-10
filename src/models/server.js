@@ -20,7 +20,7 @@ class Server {
     async dbConnection() {
 
         try {
-            await db.sequelize.sync({ force: false });
+            await db.sequelize.authenticate();
             console.log('Database online');
             
         } catch (error) {
