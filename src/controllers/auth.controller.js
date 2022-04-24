@@ -2,6 +2,7 @@ const { Users } = require("../database/models/index.js");
 const uuid = require("uuid");
 const bcrypt = require("bcryptjs");
 const { generateAccessToken } = require("../helpers/auth.helper");
+const sgMail = require("../helpers/sendgrid.helper");
 
 const postAuthLogin = async (req, res) => {
   const { email, password } = req.body;
@@ -46,6 +47,13 @@ const postAuthRegister = async (req, res) => {
       email: email,
       password: hash,
       status: 1,
+    });
+
+    await sgMail.send({
+      to: email,
+      from: "daro.qp@gmail.com",
+      subject: "Disney Account",
+      html: "<strong> Welcome to the experience Disney </strong>",
     });
 
     const token = await generateAccessToken(userCreated);
