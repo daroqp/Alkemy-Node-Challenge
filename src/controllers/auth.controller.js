@@ -22,7 +22,7 @@ const postAuthLogin = async (req, res) => {
 
     res.header("authorization", accessToken).json({
       name: user.name,
-      token: accessToken,
+      // token: accessToken,
       role: user.role,
       messagge: "User authenticate",
     });
@@ -54,11 +54,16 @@ const postAuthRegister = async (req, res) => {
       from: "daro.qp@gmail.com",
       subject: "Disney Account",
       html: "<strong> Welcome to the experience Disney </strong>",
+      mail_settings: {
+        sandbox_mode: {
+          enabled: true,
+        },
+      },
     });
 
     const token = await generateAccessToken(userCreated);
 
-    res.status(201).json({
+    res.status(200).json({
       name: userCreated.name,
       email: userCreated.email,
       token: token,
