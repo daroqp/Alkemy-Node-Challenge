@@ -1,8 +1,12 @@
-const { loginPath } = require("./auth-path.js");
+const { loginPath, registerPath } = require("./auth-path.js");
 const {
   userLoginSchema,
   userLoginResponseSchema,
 } = require("./schemas/auth/loginSchema");
+const {
+  userRegisterSchema,
+  userRegisterResponseSchema,
+} = require("./schemas/auth/registerSchema");
 const { unauthorized } = require("./components/unauthorized");
 const { errorSchema, badErrorSchema } = require("./schemas/errorSchema");
 const { serverError } = require("./components/server-error");
@@ -23,10 +27,15 @@ module.exports = {
   ],
   paths: {
     "/auth/login": loginPath,
+    "/auth/register": registerPath,
   },
   schemas: {
-    User: userLoginSchema,
-    UserResponse: userLoginResponseSchema,
+    UserLogin: userLoginSchema,
+    UserLoginResponse: userLoginResponseSchema,
+
+    UserRegister: userRegisterSchema,
+    UserRegisterResponse: userRegisterResponseSchema,
+
     Error: errorSchema,
     BadError: badErrorSchema,
   },

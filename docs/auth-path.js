@@ -1,13 +1,13 @@
 const loginPath = {
   post: {
     tags: ["Auth"],
-    summary: "API to auth account",
+    summary: "ENDPOINT to auth account",
     description: "Access: { email: test@example.com, password: 123456 }",
     requestBody: {
       content: {
         "application/json": {
           schema: {
-            $ref: "#/schemas/User",
+            $ref: "#/schemas/UserLogin",
           },
         },
       },
@@ -24,7 +24,7 @@ const loginPath = {
         content: {
           "application/json": {
             schema: {
-              $ref: "#/schemas/UserResponse",
+              $ref: "#/schemas/UserLoginResponse",
             },
           },
         },
@@ -42,6 +42,43 @@ const loginPath = {
   },
 };
 
+const registerPath = {
+  post: {
+    tags: ["Auth"],
+    summary: "ENDPOINT to register account",
+    description:
+      "Register {name: example, email: test@example.com, password: 123456}",
+    requestBody: {
+      content: {
+        "application/json": {
+          schema: {
+            $ref: "#/schemas/UserRegister",
+          },
+        },
+      },
+    },
+    responses: {
+      201: {
+        description: "Resource was successfully registered",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/schemas/UserRegisterResponse",
+            },
+          },
+        },
+      },
+      403: {
+        $ref: "#/components/BadRequest",
+      },
+      500: {
+        $ref: "#/components/ServerError",
+      },
+    },
+  },
+};
+
 module.exports = {
   loginPath,
+  registerPath,
 };

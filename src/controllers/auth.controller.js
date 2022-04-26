@@ -49,21 +49,21 @@ const postAuthRegister = async (req, res) => {
       status: 1,
     });
 
-    await sgMail.send({
-      to: email,
-      from: "daro.qp@gmail.com",
-      subject: "Disney Account",
-      html: "<strong> Welcome to the experience Disney </strong>",
-      mail_settings: {
-        sandbox_mode: {
-          enabled: true,
-        },
-      },
-    });
+    // await sgMail.send({
+    //   to: email,
+    //   from: "daro.qp@gmail.com",
+    //   subject: "Disney Account",
+    //   html: "<strong> Welcome to the experience Disney </strong>",
+    //   mail_settings: {
+    //     sandbox_mode: {
+    //       enabled: true,
+    //     },
+    //   },
+    // });
 
     const token = await generateAccessToken(userCreated);
 
-    res.status(200).json({
+    res.status(201).json({
       name: userCreated.name,
       email: userCreated.email,
       token: token,

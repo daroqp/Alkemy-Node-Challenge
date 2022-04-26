@@ -1,5 +1,5 @@
 const unauthorized = {
-  description: "Password or account are incorrect",
+  description: "Unauthorized",
   content: {
     "application/json": {
       schema: {
