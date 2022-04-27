@@ -7,6 +7,7 @@ const {
   userRegisterSchema,
   userRegisterResponseSchema,
 } = require("./schemas/auth/registerSchema");
+const { getCharactersPath } = require("./character-path");
 const { unauthorized } = require("./components/unauthorized");
 const { errorSchema, badErrorSchema } = require("./schemas/errorSchema");
 const { serverError } = require("./components/server-error");
@@ -28,6 +29,7 @@ module.exports = {
   paths: {
     "/auth/login": loginPath,
     "/auth/register": registerPath,
+    "/characters": getCharactersPath,
   },
   schemas: {
     UserLogin: userLoginSchema,
