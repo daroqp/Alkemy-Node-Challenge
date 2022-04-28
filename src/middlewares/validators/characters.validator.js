@@ -32,7 +32,8 @@ const validateCharacter = [
   .withMessage("Must be valid extension"),
   check("movies_ids")
     .exists()
-    .custom((arr) => arr instanceof Array && !arr.some((x) => !isUUID(x, "4")))
+    .toArray()
+    .isUUID(4)
     .withMessage("Ids must only contain UUIDs.")
     .optional(),
   (req, res, next) => {

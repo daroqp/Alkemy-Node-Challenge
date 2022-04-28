@@ -24,7 +24,8 @@ const validateMovie = [
         .withMessage("Must be a UIID."),
     check('characters')
         .exists()
-        .custom(arr => arr instanceof Array && !arr.some(id => !isUUID(id, '4')))
+        .toArray()
+        .isUUID(4)
         .withMessage("Ids must only contain UUIDs.")
         .optional(),
     (req, res, next) => {

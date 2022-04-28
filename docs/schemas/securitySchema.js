@@ -1,9 +1,9 @@
-const securitySchema = {
+const securitySchemes = {
   bearerAuth: {
     type: "http",
-    scheme: bearer,
+    scheme: "bearer",
     bearerFormat: "JWT",
   },
 };
 
-module.exports = { securitySchema };
+module.exports = { securitySchemes };

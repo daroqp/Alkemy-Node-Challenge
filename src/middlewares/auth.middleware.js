@@ -4,12 +4,13 @@ const { validateToken } = require("../helpers/auth.helper");
 const checkAuth = async (req, res, next) => {
   try {
     const accessToken = req.headers.authorization;
+
     if (!accessToken) return res.status(401).json({ msg: "Access denied" });
 
     const token = accessToken.split(" ").pop();
     const tokenData = await validateToken(token);
 
-    if (!tokenData.id) {
+    if (!tokenData || !tokenData.id) {
       res
         .status(401)
         .json({ msg: "Access denied, token expired or incorrect" });
@@ -23,8 +24,8 @@ const checkAuth = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    res.status(409).json({
-      msg: "Access denied",
+    res.status(403).json({
+      msg: "Access denied, you dont have permission to access",
     });
   }
 };

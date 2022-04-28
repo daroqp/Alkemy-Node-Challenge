@@ -8,10 +8,15 @@ const {
   userRegisterResponseSchema,
 } = require("./schemas/auth/registerSchema");
 const { getCharactersPath } = require("./character-path");
+const {
+  getCharactersSchema,
+} = require("./schemas/character/getCharacterResponse");
 const { unauthorized } = require("./components/unauthorized");
 const { errorSchema, badErrorSchema } = require("./schemas/errorSchema");
 const { serverError } = require("./components/server-error");
 const { badRequest } = require("./components/bad-request");
+const { forbidden } = require("./components/forbidden");
+const { securitySchemes } = require("./schemas/securitySchema");
 
 module.exports = {
   openapi: "3.0.0",
@@ -38,6 +43,8 @@ module.exports = {
     UserRegister: userRegisterSchema,
     UserRegisterResponse: userRegisterResponseSchema,
 
+    GetCharacters: getCharactersSchema,
+
     Error: errorSchema,
     BadError: badErrorSchema,
   },
@@ -45,5 +52,7 @@ module.exports = {
     Unauthorized: unauthorized,
     ServerError: serverError,
     BadRequest: badRequest,
+    Forbidden: forbidden,
+    securitySchemes,
   },
 };

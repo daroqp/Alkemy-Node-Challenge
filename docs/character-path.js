@@ -3,43 +3,60 @@ const getCharactersPath = {
     tags: ["Character"],
     summary: "ENDPOINT to get all characters",
     description: "Search and filter with @query parameter",
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
     parameters: [
       {
         in: "query",
         name: "name",
-        description: "Name of title to search.",
+        description: "Title name to search",
         required: false,
       },
       {
         in: "query",
         name: "age",
-        description: "Age to filter",
+        description: "Age to be filtered",
         required: false,
       },
       {
         in: "query",
         name: "weight",
-        description: "Weight to filter",
+        description: "Weight to be filtered",
         required: false,
       },
       {
         in: "query",
         name: "movies",
-        description: "Movie id to filter",
+        description: "Movie id to be filtered",
         required: false,
       },
     ],
     responses: {
       200: {
-        description: "OK",
+        description: "Get all characters or filtered",
         content: {
           "application/json": {
-            schema: {},
+            schema: {
+              $ref: "#/schemas/GetCharacters",
+            },
           },
         },
       },
-      403: {},
-      500: {},
+      400: {
+        $ref: "#/components/BadRequest",
+      },
+      401: {
+        $ref: "#/components/Unauthorized",
+      },
+      403: {
+        $ref: "#/components/Forbidden",
+      },
+      500: {
+        $ref: "#/components/ServerError",
+      },
     },
   },
 };

@@ -29,11 +29,11 @@ const loginPath = {
           },
         },
       },
+      400: {
+        $ref: "#/components/BadRequest",
+      },
       401: {
         $ref: "#/components/Unauthorized",
-      },
-      403: {
-        $ref: "#/components/BadRequest",
       },
       500: {
         $ref: "#/components/ServerError",
@@ -68,7 +68,7 @@ const registerPath = {
           },
         },
       },
-      403: {
+      400: {
         $ref: "#/components/BadRequest",
       },
       500: {
