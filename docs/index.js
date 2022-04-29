@@ -17,6 +17,7 @@ const {
   characterPostSchema,
   characterPutSchema,
   characterDeleteSchema,
+  characterDetailSchema,
 } = require("./schemas/character/characterSchema");
 const {
   characterPostParam,
@@ -63,6 +64,7 @@ module.exports = {
     PostCharacter: characterPostSchema,
     PutCharacter: characterPutSchema,
     DeleteCharacter: characterDeleteSchema,
+    DetailCharacter: characterDetailSchema,
 
     Error: errorSchema,
     BadError: badErrorSchema,

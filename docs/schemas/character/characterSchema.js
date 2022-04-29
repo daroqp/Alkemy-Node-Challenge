@@ -44,9 +44,21 @@ const characterDeleteSchema = {
   },
 };
 
+const characterDetailSchema = {
+  type: "object",
+  properties: {
+    name: { type: "string" },
+    image: { type: "string" },
+    weight: { type: "string" },
+    age: { type: "string" },
+    history: { type: "string" },
+  },
+};
+
 module.exports = {
   charactersGetSchema,
   characterPostSchema,
   characterPutSchema,
   characterDeleteSchema,
+  characterDetailSchema,
 };

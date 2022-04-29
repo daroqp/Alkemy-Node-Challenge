@@ -207,6 +207,52 @@ const idCharacterPath = {
       },
     },
   },
+
+  get: {
+    tags: ["Character"],
+    summary: "ENDPOINT to see a detail character",
+    description: "Detail of character",
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+    parameters: [
+      {
+        in: "param",
+        name: "character_id",
+        description: "ID character to see detail",
+        required: true,
+      },
+    ],
+    responses: {
+      200: {
+        description: "Return a character detail",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/schemas/DetailCharacter",
+            },
+          },
+        },
+      },
+      400: {
+        $ref: "#/components/BadRequest",
+      },
+      401: {
+        $ref: "#/components/Unauthorized",
+      },
+      403: {
+        $ref: "#/components/Forbidden",
+      },
+      404: {
+        $ref: "#/components/NotFound",
+      },
+      500: {
+        $ref: "#/components/ServerError",
+      },
+    },
+  },
 };
 
 module.exports = {
