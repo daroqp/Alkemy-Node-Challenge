@@ -91,7 +91,7 @@ const characterDetail = async (req, res) => {
       ],
     });
 
-    if (!character) res.status(404).json({ msg: "Character not found" });
+    if (!character) return res.status(404).json({ msg: "Character not found" });
 
     res.status(200).json({
       character,
@@ -157,7 +157,7 @@ const deleteCharacter = async (req, res) => {
         msg: "Character has been deleted successfully!",
       });
     } else {
-      res.status(400).json({
+      res.status(404).json({
         msg: "Character doesn't  exist or worng id",
       });
     }

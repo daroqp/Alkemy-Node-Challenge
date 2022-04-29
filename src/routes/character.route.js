@@ -8,11 +8,11 @@ const router = Router();
 
 router.get('/', checkAuth , checkRoleAuth(['admin', 'user']) , validateFilterCharacter , getCharacters );
 
-router.get('/:character_id', checkRoleAuth(['admin', 'user']) , checkAuth , validateIdCharacter , characterDetail );
+router.get('/:character_id',checkAuth , checkRoleAuth(['admin', 'user']), validateIdCharacter , characterDetail );
 
-router.post('/create', checkAuth , checkRoleAuth(['admin']) , uploadFile, validateCharacter , postCharacter );
+router.post('/create', checkAuth , checkRoleAuth(['admin']), uploadFile, validateCharacter , postCharacter );
 
-router.put('/:character_id', checkRoleAuth(['admin']) , checkAuth , validateCharacter , editCharacter );
+router.put('/:character_id',checkAuth , checkRoleAuth(['admin']), uploadFile, validateCharacter , editCharacter );
 
 router.delete('/:character_id', checkAuth , checkRoleAuth(['admin']) , validateIdCharacter , deleteCharacter );
 

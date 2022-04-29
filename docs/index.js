@@ -7,15 +7,27 @@ const {
   userRegisterSchema,
   userRegisterResponseSchema,
 } = require("./schemas/auth/registerSchema");
-const { getCharactersPath } = require("./character-path");
 const {
-  getCharactersSchema,
-} = require("./schemas/character/getCharacterResponse");
+  getCharactersPath,
+  postCharacterPath,
+  idCharacterPath,
+} = require("./character-path");
+const {
+  charactersGetSchema,
+  characterPostSchema,
+  characterPutSchema,
+  characterDeleteSchema,
+} = require("./schemas/character/characterSchema");
+const {
+  characterPostParam,
+} = require("./schemas/character/characterParamSchema");
+
 const { unauthorized } = require("./components/unauthorized");
 const { errorSchema, badErrorSchema } = require("./schemas/errorSchema");
 const { serverError } = require("./components/server-error");
 const { badRequest } = require("./components/bad-request");
 const { forbidden } = require("./components/forbidden");
+const { notFound } = require("./components/notFound");
 const { securitySchemes } = require("./schemas/securitySchema");
 
 module.exports = {
@@ -34,7 +46,10 @@ module.exports = {
   paths: {
     "/auth/login": loginPath,
     "/auth/register": registerPath,
+
     "/characters": getCharactersPath,
+    "/characters/create": postCharacterPath,
+    "/characters/:character_id": idCharacterPath,
   },
   schemas: {
     UserLogin: userLoginSchema,
@@ -43,7 +58,11 @@ module.exports = {
     UserRegister: userRegisterSchema,
     UserRegisterResponse: userRegisterResponseSchema,
 
-    GetCharacters: getCharactersSchema,
+    CharacterPostParam: characterPostParam,
+    GetCharacters: charactersGetSchema,
+    PostCharacter: characterPostSchema,
+    PutCharacter: characterPutSchema,
+    DeleteCharacter: characterDeleteSchema,
 
     Error: errorSchema,
     BadError: badErrorSchema,
@@ -53,6 +72,7 @@ module.exports = {
     ServerError: serverError,
     BadRequest: badRequest,
     Forbidden: forbidden,
+    NotFound: notFound,
     securitySchemes,
   },
 };
