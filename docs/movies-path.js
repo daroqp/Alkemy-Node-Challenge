@@ -1,71 +1,8 @@
-const getCharactersPath = {
-  get: {
-    tags: ["Character"],
-    summary: "ENDPOINT to get all characters",
-    description: "Search and filter with @query parameter",
-    security: [
-      {
-        bearerAuth: [],
-      },
-    ],
-    parameters: [
-      {
-        in: "query",
-        name: "name",
-        description: "Title name to search",
-        required: false,
-      },
-      {
-        in: "query",
-        name: "age",
-        description: "Age to be filtered",
-        required: false,
-      },
-      {
-        in: "query",
-        name: "weight",
-        description: "Weight to be filtered",
-        required: false,
-      },
-      {
-        in: "query",
-        name: "movies",
-        description: "Movie id to be filtered",
-        required: false,
-      },
-    ],
-    responses: {
-      200: {
-        description: "Get all characters or filtered",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/schemas/GetCharacters",
-            },
-          },
-        },
-      },
-      400: {
-        $ref: "#/components/BadRequest",
-      },
-      401: {
-        $ref: "#/components/Unauthorized",
-      },
-      403: {
-        $ref: "#/components/Forbidden",
-      },
-      500: {
-        $ref: "#/components/ServerError",
-      },
-    },
-  },
-};
-
-const postCharacterPath = {
+const postMoviesSeriesPath = {
   post: {
-    tags: ["Character"],
-    summary: "ENDPOINT to create a character",
-    description: "Create character",
+    tags: ["Movies Series"],
+    summary: "ENDPOINT to create a new movie/series",
+    description: "To create a new movie/series",
     security: [
       {
         bearerAuth: [],
@@ -75,18 +12,19 @@ const postCharacterPath = {
       content: {
         "multipart/form-data": {
           schema: {
-            $ref: "#/schemas/CharacterPostParam",
+            $ref: "#/schemas/PostMoviesParam",
           },
         },
       },
     },
     responses: {
-      201: {
-        description: "Create a character",
+      200: {
+        description:
+          "Returns a message indicating the creation of a new resource",
         content: {
           "application/json": {
             schema: {
-              $ref: "#/schemas/PostCharacter",
+              $ref: "#/schemas/PostMoviesSchema",
             },
           },
         },
@@ -107,11 +45,11 @@ const postCharacterPath = {
   },
 };
 
-const idCharacterPath = {
+const getMoviesSeriesPath = {
   get: {
-    tags: ["Character"],
-    summary: "ENDPOINT to see a detail character",
-    description: "Detail of character",
+    tags: ["Movies Series"],
+    summary: "ENDPOINT to get all movie/series",
+    description: "Get all movie/series or filtered",
     security: [
       {
         bearerAuth: [],
@@ -119,19 +57,31 @@ const idCharacterPath = {
     ],
     parameters: [
       {
-        in: "param",
-        name: "character_id",
-        description: "ID character to see detail",
-        required: true,
+        in: "query",
+        name: "title",
+        description: "Title to be searched",
+        required: false,
+      },
+      {
+        in: "query",
+        name: "genre_id",
+        description: "Genre ID to be filtered",
+        required: false,
+      },
+      {
+        in: "query",
+        name: "order",
+        description: "Order: ASC, DESC",
+        required: false,
       },
     ],
     responses: {
       200: {
-        description: "Return a character detail",
+        description: "Return movie/series filtered",
         content: {
           "application/json": {
             schema: {
-              $ref: "#/schemas/DetailCharacter",
+              $ref: "#/schemas/GetMoviesSchema",
             },
           },
         },
@@ -153,10 +103,13 @@ const idCharacterPath = {
       },
     },
   },
-  put: {
-    tags: ["Character"],
-    summary: "ENDPOINT to edit a character",
-    description: "Edit a character",
+};
+
+const idMoviesPath = {
+  get: {
+    tags: ["Movies Series"],
+    summary: "ENDPOINT to get a movie/serie",
+    description: "Get movie/series detail",
     security: [
       {
         bearerAuth: [],
@@ -165,27 +118,73 @@ const idCharacterPath = {
     parameters: [
       {
         in: "param",
-        name: "character_id",
-        description: "ID character to edit",
+        name: "movie_id",
+        description: "ID movie to see detail",
+        required: true,
+      },
+    ],
+    responses: {
+      200: {
+        description: "Return a movie/serie detail",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/schemas/DetailMovie",
+            },
+          },
+        },
+      },
+      400: {
+        $ref: "#/components/BadRequest",
+      },
+      401: {
+        $ref: "#/components/Unauthorized",
+      },
+      403: {
+        $ref: "#/components/Forbidden",
+      },
+      404: {
+        $ref: "#/components/NotFound",
+      },
+      500: {
+        $ref: "#/components/ServerError",
+      },
+    },
+  },
+
+  put: {
+    tags: ["Movies Series"],
+    summary: "ENDPOINT to edit a movie/serie",
+    description: "Edit a movie/series",
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+    parameters: [
+      {
+        in: "param",
+        name: "movie_id",
+        description: "ID movie to edit a movie/serie",
         required: true,
       },
     ],
     requestBody: {
       content: {
-        "application/json": {
+        "multipart/form-data": {
           schema: {
-            $ref: "#/schemas/CharacterPostParam",
+            $ref: "#/schemas/PostMoviesParam",
           },
         },
       },
     },
     responses: {
       200: {
-        description: "Return character was edit successfully",
+        description: "OK",
         content: {
           "application/json": {
             schema: {
-              $ref: "#/schemas/PutCharacter",
+              $ref: "#/schemas/PutMoviesSchema",
             },
           },
         },
@@ -208,9 +207,9 @@ const idCharacterPath = {
     },
   },
   delete: {
-    tags: ["Character"],
-    summary: "ENDPOINT to delete a character",
-    description: "Delete a character",
+    tags: ["Movies Series"],
+    summary: "ENDPOINT to elimate a movie/serie",
+    description: "Elimate a movie/series",
     security: [
       {
         bearerAuth: [],
@@ -219,18 +218,18 @@ const idCharacterPath = {
     parameters: [
       {
         in: "param",
-        name: "character_id",
-        description: "ID character to delete",
+        name: "movie_id",
+        description: "ID movie to delete a movie/serie",
         required: true,
       },
     ],
     responses: {
       200: {
-        description: "Return a character deleted",
+        description: "Return a message OK",
         content: {
           "application/json": {
             schema: {
-              $ref: "#/schemas/DeleteCharacter",
+              $ref: "#/schemas/DeleteMovieSchema",
             },
           },
         },
@@ -254,8 +253,4 @@ const idCharacterPath = {
   },
 };
 
-module.exports = {
-  getCharactersPath,
-  postCharacterPath,
-  idCharacterPath,
-};
+module.exports = { postMoviesSeriesPath, getMoviesSeriesPath, idMoviesPath };

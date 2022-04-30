@@ -49,9 +49,13 @@ const characterDetailSchema = {
   properties: {
     name: { type: "string" },
     image: { type: "string" },
-    weight: { type: "string" },
-    age: { type: "string" },
+    weight: { type: "number" },
+    age: { type: "number" },
     history: { type: "string" },
+    movies_series_id: {
+      type: "array",
+      items: { type: "object", properties: { movie: { type: "string" } } },
+    },
   },
 };
 

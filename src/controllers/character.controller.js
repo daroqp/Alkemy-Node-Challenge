@@ -108,7 +108,7 @@ const editCharacter = async (req, res) => {
   const { name, image, weight, age, history, movies_ids = [] } = req.body;
 
   try {
-    await Characters.update(
+    const character = await Characters.update(
       {
         name: name,
         image: image,
@@ -120,6 +120,10 @@ const editCharacter = async (req, res) => {
         where: { id: req.params.character_id },
       }
     );
+
+    const existCharacter = Number(character) !== 0;
+    if (!existCharacter)
+      return res.status(404).json({ msg: "Character not found" });
 
     await Character_Movie.destroy({
       where: { characters_id: req.params.character_id },

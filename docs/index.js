@@ -7,6 +7,7 @@ const {
   userRegisterSchema,
   userRegisterResponseSchema,
 } = require("./schemas/auth/registerSchema");
+
 const {
   getCharactersPath,
   postCharacterPath,
@@ -22,6 +23,22 @@ const {
 const {
   characterPostParam,
 } = require("./schemas/character/characterParamSchema");
+
+const {
+  postMoviesSeriesPath,
+  getMoviesSeriesPath,
+  idMoviesPath,
+} = require("./movies-path");
+const {
+  moviePostParamSchema,
+} = require("./schemas/movies-series/moviesParamSchema");
+const {
+  moviePostSchema,
+  movieGetSchema,
+  movieDetailSchema,
+  moviePutSchema,
+  movieDeleteSchema,
+} = require("./schemas/movies-series/moviesSchema");
 
 const { unauthorized } = require("./components/unauthorized");
 const { errorSchema, badErrorSchema } = require("./schemas/errorSchema");
@@ -48,9 +65,13 @@ module.exports = {
     "/auth/login": loginPath,
     "/auth/register": registerPath,
 
-    "/characters": getCharactersPath,
     "/characters/create": postCharacterPath,
+    "/characters": getCharactersPath,
     "/characters/:character_id": idCharacterPath,
+
+    "/movies/create": postMoviesSeriesPath,
+    "/movies": getMoviesSeriesPath,
+    "/movies/:movie_id": idMoviesPath,
   },
   schemas: {
     UserLogin: userLoginSchema,
@@ -65,6 +86,13 @@ module.exports = {
     PutCharacter: characterPutSchema,
     DeleteCharacter: characterDeleteSchema,
     DetailCharacter: characterDetailSchema,
+
+    PostMoviesParam: moviePostParamSchema,
+    PostMoviesSchema: moviePostSchema,
+    GetMoviesSchema: movieGetSchema,
+    DetailMovie: movieDetailSchema,
+    PutMoviesSchema: moviePutSchema,
+    DeleteMovieSchema: movieDeleteSchema,
 
     Error: errorSchema,
     BadError: badErrorSchema,

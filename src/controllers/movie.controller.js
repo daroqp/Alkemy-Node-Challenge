@@ -101,7 +101,7 @@ const editMovie = async (req, res) => {
   const { title, image, rate, genre_id, characters = [] } = req.body;
 
   try {
-    await Movies_series.update(
+    const movie = await Movies_series.update(
       {
         title: title,
         image: image,
@@ -112,6 +112,9 @@ const editMovie = async (req, res) => {
         where: { id: req.params.movie_id },
       }
     );
+
+    const existMovie = Number(movie) !== 0;
+    if (!existMovie) return res.status(404).json({ msg: "Movie not found" });
 
     await Character_Movie.destroy({
       where: { movies_series_id: req.params.movie_id },
