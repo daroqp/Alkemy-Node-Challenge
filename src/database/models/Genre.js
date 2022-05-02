@@ -1,10 +1,7 @@
-
-module.exports = ( sequelize, DataTypes ) => {
-
-    let alias = "Genres"
+module.exports = (sequelize, DataTypes) => {
+    let alias = "Genres";
 
     let cols = {
-
         id: {
             type: DataTypes.STRING(100),
             primaryKey: true,
@@ -20,21 +17,20 @@ module.exports = ( sequelize, DataTypes ) => {
             type: DataTypes.STRING(100),
             allowNull: false,
         },
-
-    }
+    };
 
     let config = {
-        tableName: 'genres',
-    }
+        tableName: "genres",
+    };
 
-    const Genre = sequelize.define( alias, cols, config );
+    const Genre = sequelize.define(alias, cols, config);
 
-    Genre.associate = models => {
-        Genre.hasMany( models.Movies_series, {
+    Genre.associate = (models) => {
+        Genre.hasMany(models.Movies_series, {
             as: "genre",
-            foreignKey: "genres_id"
-        } )
-    }
+            foreignKey: "genres_id",
+        });
+    };
 
     return Genre;
-}
+};
