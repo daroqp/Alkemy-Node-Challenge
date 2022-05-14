@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 const { Characters } = require("../database/models/index.js");
 const { Character_Movie } = require("../database/models/index.js");
 const { Movies_series } = require("../database/models/index.js");
-const { destroyImage } = require("../helpers/destroyImage.js");
+const { destroyImage } = require("../helpers/destroyImage.helper.js");
 
 const getCharacters = async (req, res) => {
     try {

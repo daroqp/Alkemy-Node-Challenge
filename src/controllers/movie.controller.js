@@ -5,6 +5,7 @@ const { Movies_series } = require("../database/models/");
 const { Genres } = require("../database/models/");
 const { Characters } = require("../database/models/");
 const { Character_Movie } = require("../database/models/");
+const { destroyImage } = require("../helpers/destroyImage.helper.js");
 
 const getMovies = async (req, res) => {
     try {
