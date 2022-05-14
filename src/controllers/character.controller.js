@@ -9,7 +9,7 @@ const { destroyImage } = require("../helpers/destroyImage.helper.js");
 const getCharacters = async (req, res) => {
     try {
         const { name, age, weight, movies } = req.query;
-        console.log(name, age, weight, movies);
+
         const where = new Object();
         const whereMovie = new Object();
 
@@ -17,7 +17,7 @@ const getCharacters = async (req, res) => {
         if (age) where.age = { [Op.eq]: age };
         if (weight) where.weight = { [Op.eq]: weight };
         if (movies) whereMovie.id = movies;
-        console.log(where);
+
         const characters = await Characters.findAll({
             attributes: ["name", "image"],
             include: [
@@ -111,21 +111,21 @@ const editCharacter = async (req, res) => {
     const { name, image, weight, age, history, movies_ids = [] } = req.body;
 
     try {
-        const existCharacter = Number(character) !== 0;
-        if (!existCharacter)
-            return res.status(404).json({ msg: "Character not found" });
+        const character = await Characters.findByPk(req.params.character_id, {
+            attributes: ["image"],
+            raw: true,
+        });
 
-        const { image: imageToDestroy } = await Characters.findByPk(
-            req.params.character_id,
-            {
-                attributes: ["image"],
-                raw: true,
-            }
-        );
+        if (!character) {
+            destroyImage(image, "characters");
+            return res.status(404).json({ msg: "Character not found" });
+        }
+
+        const { image: imageToDestroy } = character;
 
         destroyImage(imageToDestroy, "characters");
 
-        const character = await Characters.update(
+        await Characters.update(
             {
                 name: name,
                 image: image,

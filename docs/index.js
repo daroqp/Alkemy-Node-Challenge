@@ -12,6 +12,8 @@ const {
     getCharactersPath,
     postCharacterPath,
     idCharacterPath,
+    idCharacterEditPath,
+    idCharacterDeletePath,
 } = require("./character-path");
 const {
     charactersGetSchema,
@@ -68,6 +70,8 @@ module.exports = {
         "/characters/create": postCharacterPath,
         "/characters": getCharactersPath,
         "/characters/{character_id}": idCharacterPath,
+        "/characters/{edit_character_id}": idCharacterEditPath,
+        "/characters/{delete_character_id}": idCharacterDeletePath,
 
         "/movies/create": postMoviesSeriesPath,
         "/movies": getMoviesSeriesPath,

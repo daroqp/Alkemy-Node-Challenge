@@ -153,6 +153,9 @@ const idCharacterPath = {
             },
         },
     },
+};
+
+const idCharacterEditPath = {
     put: {
         tags: ["Character"],
         summary: "ENDPOINT to edit a character",
@@ -164,15 +167,15 @@ const idCharacterPath = {
         ],
         parameters: [
             {
-                in: "param",
-                name: "character_id",
+                in: "path",
+                name: "edit_character_id",
                 description: "ID character to edit",
                 required: true,
             },
         ],
         requestBody: {
             content: {
-                "application/json": {
+                "multipart/form-data": {
                     schema: {
                         $ref: "#/schemas/CharacterPostParam",
                     },
@@ -207,6 +210,9 @@ const idCharacterPath = {
             },
         },
     },
+};
+
+const idCharacterDeletePath = {
     delete: {
         tags: ["Character"],
         summary: "ENDPOINT to delete a character",
@@ -218,8 +224,8 @@ const idCharacterPath = {
         ],
         parameters: [
             {
-                in: "param",
-                name: "character_id",
+                in: "path",
+                name: "delete_character_id",
                 description: "ID character to delete",
                 required: true,
             },
@@ -258,4 +264,6 @@ module.exports = {
     getCharactersPath,
     postCharacterPath,
     idCharacterPath,
+    idCharacterEditPath,
+    idCharacterDeletePath,
 };
