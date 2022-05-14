@@ -9,6 +9,7 @@ const { destroyImage } = require("../helpers/destroyImage.helper.js");
 const getCharacters = async (req, res) => {
     try {
         const { name, age, weight, movies } = req.query;
+        console.log(name, age, weight, movies);
         const where = new Object();
         const whereMovie = new Object();
 
@@ -16,7 +17,7 @@ const getCharacters = async (req, res) => {
         if (age) where.age = { [Op.eq]: age };
         if (weight) where.weight = { [Op.eq]: weight };
         if (movies) whereMovie.id = movies;
-
+        console.log(where);
         const characters = await Characters.findAll({
             attributes: ["name", "image"],
             include: [
@@ -24,7 +25,7 @@ const getCharacters = async (req, res) => {
                     model: Movies_series,
                     as: "movies_or_series",
                     attributes: [],
-                    where: whereMovie,
+                    whereMovie: whereMovie,
                 },
             ],
             where,
