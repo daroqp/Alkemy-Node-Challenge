@@ -68,6 +68,7 @@ const postCharacter = async (req, res) => {
         );
 
         res.status(201).json({
+            character_id: id,
             msg: "Character created successfully",
         });
     } catch (error) {
@@ -165,11 +166,19 @@ const editCharacter = async (req, res) => {
 
 const deleteCharacter = async (req, res) => {
     try {
-        const isDeleted = await Characters.destroy({
-            where: { id: req.params.character_id },
+        const character = await Characters.findByPk(req.params.character_id, {
+            attributes: ["image"],
+            raw: true,
         });
 
-        if (isDeleted) {
+        if (character) {
+            const { image: imageToDestroy } = character;
+            destroyImage(imageToDestroy, "characters");
+
+            await Characters.destroy({
+                where: { id: req.params.character_id },
+            });
+
             res.status(200).json({
                 msg: "Character has been deleted successfully!",
             });
