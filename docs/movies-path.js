@@ -2,7 +2,8 @@ const postMoviesSeriesPath = {
     post: {
         tags: ["Movies Series"],
         summary: "ENDPOINT to create a new movie/series",
-        description: "To create a new movie/series",
+        description:
+            "To create a new movie/series\n\nGenres IDs:\n\naccion = 8e23eb23-e7bb-431a-8403-f1d0d713c45e\n\ncomedy = 8ca66c90-4dba-40db-8a35-035f943518d6\n\nanimation = 1ae1c23a-b6bb-4b9a-9d63-6edd850a9c2a\n\nterror = cbcffd32-6bdc-4b4c-aff7-64e4d4aba2d9",
         security: [
             {
                 bearerAuth: [],
@@ -151,11 +152,13 @@ const idMoviesPath = {
             },
         },
     },
-
+};
+const idMoviesEditPath = {
     put: {
         tags: ["Movies Series"],
         summary: "ENDPOINT to edit a movie/serie",
-        description: "Edit a movie/series",
+        description:
+            "Edit a movie/series\n\nGenres IDs:\n\naccion = 8e23eb23-e7bb-431a-8403-f1d0d713c45e\n\ncomedy = 8ca66c90-4dba-40db-8a35-035f943518d6\n\nanimation = 1ae1c23a-b6bb-4b9a-9d63-6edd850a9c2a\n\nterror = cbcffd32-6bdc-4b4c-aff7-64e4d4aba2d9 ",
         security: [
             {
                 bearerAuth: [],
@@ -163,8 +166,8 @@ const idMoviesPath = {
         ],
         parameters: [
             {
-                in: "param",
-                name: "movie_id",
+                in: "path",
+                name: "edit_movie_id",
                 description: "ID movie to edit a movie/serie",
                 required: true,
             },
@@ -206,6 +209,8 @@ const idMoviesPath = {
             },
         },
     },
+};
+const idMoviesDeletePath = {
     delete: {
         tags: ["Movies Series"],
         summary: "ENDPOINT to elimate a movie/serie",
@@ -217,8 +222,8 @@ const idMoviesPath = {
         ],
         parameters: [
             {
-                in: "param",
-                name: "movie_id",
+                in: "path",
+                name: "delete_movie_id",
                 description: "ID movie to delete a movie/serie",
                 required: true,
             },
@@ -253,4 +258,10 @@ const idMoviesPath = {
     },
 };
 
-module.exports = { postMoviesSeriesPath, getMoviesSeriesPath, idMoviesPath };
+module.exports = {
+    postMoviesSeriesPath,
+    getMoviesSeriesPath,
+    idMoviesPath,
+    idMoviesEditPath,
+    idMoviesDeletePath,
+};

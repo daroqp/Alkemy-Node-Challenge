@@ -30,6 +30,8 @@ const {
     postMoviesSeriesPath,
     getMoviesSeriesPath,
     idMoviesPath,
+    idMoviesEditPath,
+    idMoviesDeletePath,
 } = require("./movies-path");
 const {
     moviePostParamSchema,
@@ -76,6 +78,8 @@ module.exports = {
         "/movies/create": postMoviesSeriesPath,
         "/movies": getMoviesSeriesPath,
         "/movies/{movie_id}": idMoviesPath,
+        "/movies/{edit_movie_id}": idMoviesEditPath,
+        "/movies/{delete_movie_id}": idMoviesDeletePath,
     },
     schemas: {
         UserLogin: userLoginSchema,

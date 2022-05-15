@@ -88,6 +88,7 @@ const postMovie = async (req, res) => {
         );
 
         res.status(200).json({
+            movies_series_id: id,
             msg: "Movie/serie created successfully!",
         });
     } catch (error) {
@@ -102,21 +103,20 @@ const editMovie = async (req, res) => {
     const { title, image, rate, genre_id, characters = [] } = req.body;
 
     try {
-        const existMovie = Number(movie) !== 0;
-        if (!existMovie)
+        const movie = await Movies_series.findByPk(req.params.movie_id, {
+            attributes: ["image"],
+            raw: true,
+        });
+
+        if (!movie) {
+            destroyImage(image, "movies");
             return res.status(404).json({ msg: "Movie not found" });
+        }
 
-        const { image: imageToDestroy } = await Movies_series.findByPk(
-            req.params.movie_id,
-            {
-                attributes: ["image"],
-                raw: true,
-            }
-        );
-
+        const { image: imageToDestroy } = movie;
         destroyImage(imageToDestroy, "movies");
 
-        const movie = await Movies_series.update(
+        await Movies_series.update(
             {
                 title: title,
                 image: image,
@@ -155,11 +155,19 @@ const editMovie = async (req, res) => {
 
 const deleteMovie = async (req, res) => {
     try {
-        const isDeleted = Movies_series.destroy({
-            where: { id: req.params.movie_id },
+        const movie = await Movies_series.findByPk(req.params.movie_id, {
+            attributes: ["image"],
+            raw: true,
         });
 
-        if (isDeleted) {
+        if (movie) {
+            const { image: imageToDestroy } = movie;
+            destroyImage(imageToDestroy, "movies");
+
+            await Movies_series.destroy({
+                where: { id: req.params.movie_id },
+            });
+
             res.status(200).json({
                 msg: "Movie/serie has been deleted successfully!",
             });

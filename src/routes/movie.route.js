@@ -11,7 +11,7 @@ router.get('/:movie_id', checkAuth , checkRoleAuth(['admin', 'user']) , validate
 
 router.post('/create', checkAuth , checkRoleAuth(['admin']) , uploadFile , validateMovie , postMovie );
 
-router.put('/:movie_id', checkAuth , checkRoleAuth(['admin']) , validateIdMovie , validateMovie , editMovie );
+router.put('/:movie_id', checkAuth , checkRoleAuth(['admin']) , uploadFile , validateIdMovie , validateMovie , editMovie );
 
 router.delete('/:movie_id', checkAuth , checkRoleAuth(['admin']) , validateIdMovie , deleteMovie );
 
