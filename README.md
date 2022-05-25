@@ -121,7 +121,7 @@ Con todas las variables inicializadas y la base de datos  ya configurada es hora
 
 # 🏴‍☠  🏴‍☠️  🏴‍☠    ️🏴‍☠️  🏴‍☠️
 ```javascript
-$ npm run dev
+$ npm start
 ```
 ![Image text](/src/storage/presentation/doc-0.png)
 # 🏴‍☠  🏴‍☠️  🏴‍☠    ️🏴‍☠️  🏴‍☠️
