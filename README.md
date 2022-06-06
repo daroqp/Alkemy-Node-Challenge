@@ -194,6 +194,6 @@ Autorizamos y cerramos la ventana emergente, con todo esto listo estamos en cond
 
 * Mejoraría el lenguaje, sería el pasaje de un tipado dinámico a uno estático como lo es Typescript, para tener una mayor solidez en la base de un proyecto del backend, que es lo que más se necesita y solicita.
 
-*Usar una arquitectura más limpia, ahora se está utilizando MVC, lo ideal sería usar Clean Architecture esto nos daría la posibilidad de separar el dominio y sus casos de uso de otras capas como pueden ser las bibliotecas externas, para que en un futuro si deseamos cambiar algunas bibliotecas sea haga en un lugar y no se tenga que ir a buscar en diferentes directorios. De esta manera el proyecto tiene una alta escalabilidad y mantenibilidad.
+* Usar una arquitectura más limpia, ahora se está utilizando MVC, lo ideal sería usar Clean Architecture esto nos daría la posibilidad de separar el dominio y sus casos de uso de otras capas como pueden ser las bibliotecas externas, para que en un futuro si deseamos cambiar algunas bibliotecas sea haga en un lugar y no se tenga que ir a buscar en diferentes directorios. De esta manera el proyecto tiene una alta escalabilidad y mantenibilidad.
 
-Investigar y aplicar sobre los patrones de diseño, estos se usan cuando tenemos ciertos problemas que son frecuentes en nuestro dia a dia, por lo cual estos nos brindan una solución que está perfeccionada para cada caso.
+* Investigar y aplicar sobre los patrones de diseño, estos se usan cuando tenemos ciertos problemas que son frecuentes en nuestro dia a dia, por lo cual estos nos brindan una solución que está perfeccionada para cada caso.
