@@ -132,7 +132,7 @@ $ npm start
 
 ***
 
-Si todo salió bien deberíamos ir a [localhost:3000/docs](http://localhost:3000/docs) <"3000" es el puerto que está por defecto>, donde se veria algo así:
+Si todo salió bien deberíamos ir a [localhost:3000/docs](http://localhost:3000/docs){:target="_blank"} <<"3000" es el puerto que está por defecto pero esto puede variar dependiendo de la variable de entorno que hayas puesto en PORT anteriormente >>, donde se veria algo así:
 
 &nbsp;
 
@@ -173,3 +173,27 @@ Cuando nos devuelve la respuesta del servidor nos trae con él nuestro token de 
 &nbsp;
 
 Autorizamos y cerramos la ventana emergente, con todo esto listo estamos en condiciones de poder explorar el resto de la API REST. 
+
+&nbsp;
+
+## **Concluciones**
+
+### **Lo bueno: 😁**
+
+* Lo más valioso que pude sacar de esta experiencia es la de haber podido profundizar mi conocimiento con lo que respecta a la  base de datos junto con el ORM Sequelize donde pude trabajar de forma más intensa con el manejo de relaciones de muchos a muchos (creando una tabla intermedia que es la manera que se recomienda al tener este tipo de relaciones), generar las migraciones, crear los seeders y poder extraer de una manera más efectiva algunos datos de la base de datos utilizando las cláusulas y atributos que nos provee sequelize en las querys.
+
+* Otra de las habilidades que pude pulir es el manejo de la arquitectura MVC, la creación de middlewares para validar y sanitizar las entradas de una petición y mandar los datos filtrados al controlador de manera que este solo se encarga de procesarlos.
+
+* Aprender sobre JWT y SWAGGER, donde json web token nos asegura que las peticiones estén hechas por personas que tengan una cuenta en nuestra app.Tambien tuve que investigar sobre swagger, me pareció una herramienta muy linda para algo tan tedioso y valioso como es la documentación de un proyecto, se hace de una manera amena y para el usuario que quiera leerla, esta cuenta con una estructura agradable a la vista y fácilmente entendible.
+
+### **Lo malo: ☹️**
+
+* Una de las cosas que quiero mencionar es la parte de testing, si bien es algo que quiero aprender todavía no tengo la suficiente información con respecto a todo este ámbito.
+
+### **A mejorar: ⛩️**
+
+* Mejoraría el lenguaje, sería el pasaje de un tipado dinámico a uno estático como lo es Typescript, para tener una mayor solidez en la base de un proyecto del backend, que es lo que más se necesita y solicita.
+
+*Usar una arquitectura más limpia, ahora se está utilizando MVC, lo ideal sería usar Clean Architecture esto nos daría la posibilidad de separar el dominio y sus casos de uso de otras capas como pueden ser las bibliotecas externas, para que en un futuro si deseamos cambiar algunas bibliotecas sea haga en un lugar y no se tenga que ir a buscar en diferentes directorios. De esta manera el proyecto tiene una alta escalabilidad y mantenibilidad.
+
+Investigar y aplicar sobre los patrones de diseño, estos se usan cuando tenemos ciertos problemas que son frecuentes en nuestro dia a dia, por lo cual estos nos brindan una solución que está perfeccionada para cada caso.
